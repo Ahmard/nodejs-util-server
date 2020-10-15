@@ -100,7 +100,7 @@ exports.open = function (request, response) {
 };
 
 // Update a Category identified by the categoryId in the request
-exports.update = function (request, response) {
+exports.rename = function (request, response) {
     response.contentType('application/json');
 
     // Validate Request
@@ -110,7 +110,7 @@ exports.update = function (request, response) {
         });
     }
 
-    Category.updateById(
+    Category.rename(
         request.params.categoryId,
         new Category(request.body),
         function (error, data) {

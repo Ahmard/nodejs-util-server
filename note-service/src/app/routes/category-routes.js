@@ -1,24 +1,24 @@
 module.exports = function (app) {
     const categories = require("../controllers/CategoryController");
 
-    // Create a new Customer
+    // Create a new Category
     app.post("/api/categories", categories.create);
 
-    // Retrieve all Customers
+    // Retrieve all Categories
     app.get("/api/categories", categories.list);
 
     // Open category and read its notes
     app.get("/api/categories/:categoryId/open", categories.open);
 
-    // Retrieve a single Customer with Categoryd
+    // Retrieve a single Category
     app.get("/api/categories/:categoryId", categories.findOne);
 
-    // Update a Customer with Categoryd
-    app.put("/api/categories/:categoryId", categories.update);
+    // Rename a Category
+    app.put("/api/categories/:categoryId", categories.rename);
 
-    // Delete a Customer with Categoryd
+    // Delete a Category
     app.delete("/api/categories/:categoryId", categories.delete);
 
-    // Create a new Customer
+    // Create a new Category
     app.delete("/api/categories", categories.format);
 };

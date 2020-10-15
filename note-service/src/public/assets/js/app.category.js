@@ -11,6 +11,7 @@ $(function () {
     let htmlCategories = $('#template-category-index').html();
     let templateAddCategory = $('#template-add-category').html();
     let templateCategoryItem = Handlebars.compile($('#template-category-item').html());
+    let templateRenameCategory = Handlebars.compile($('#template-rename-category').html());
 
     setTimeout(function () {
         fetchCategories();
@@ -27,7 +28,7 @@ $(function () {
             }
         }).then(function (response) {
             let categories = response.data;
-            categoryLists = [...categoryLists, ...categories];
+            categoryLists = categories;
             //Remove loader
             $elCategories.html('');
             //Display categories
@@ -110,67 +111,73 @@ $(function () {
     }
 
     deleteCategory = function (categoryId) {
-        $.ajax({
-            url: '/api/categories/' + categoryId,
-            method: 'DELETE',
-            error: function (error) {
-                alert('Error occurred');
-                console.log(error);
-            }
-        }).then(function (response) {
-            let category = response.data;
-            //Remove category from list
-            delete categoryLists[findCategory(categoryId).key];
-            //Append to categories
-            let $categoryItem = $('#category-item-' + categoryId);
-            $categoryItem.addClass('border-danger').fadeOut(200, function () {
-                $categoryItem.remove();
+        if(confirm('All notes in this directory will be deleted with it\n Do you really want to delete?')){
+            $.ajax({
+                url: '/api/categories/' + categoryId,
+                method: 'DELETE',
+                error: function (error) {
+                    alert('Error occurred');
+                    console.log(error);
+                }
+            }).then(function (response) {
+                let category = response.data;
+                //Remove category from list
+                delete categoryLists[findCategory(categoryId).key];
+                //Append to categories
+                let $categoryItem = $('#category-item-' + categoryId);
+                $categoryItem.addClass('border-danger').fadeOut(200, function () {
+                    $categoryItem.remove();
+                });
+
+                fetchCategories();
+
+                $modal.modal('hide');
             });
-            $modal.modal('hide');
-        });
+        }
     };
 
     renameCategory = function (categoryId) {
         let category = findCategory(categoryId);
-        $modal.find('.modal-title').html('Update category');
+        $modal.find('.modal-title').html('Rename category');
         $modal.find('.modal-footer').hide();
-        $modal.find('.modal-body').html(templateEditCategory({
+        $modal.find('.modal-body').html(templateRenameCategory({
             category: category.category
         }));
+        $modal.on('shown.bs.modal', function () {
+            let $form = $('#form-rename-category');
+            $form.submit(function (event) {
+                event.preventDefault();
+
+                let newCategoryName = $('input[name="category-name"]').val();
+
+                $form.find('button[type="submit"]')
+                    .addClass('disabled')
+                    .attr('disabled', 'disabled')
+                    .html('Saving...');
+
+                $.ajax({
+                    url: '/api/categories/' + categoryId,
+                    method: 'PUT',
+                    data: {
+                        name: newCategoryName
+                    },
+                    error: function (error) {
+                        alert('Error occurred');
+                        console.log(error);
+                    }
+                }).then(function (response) {
+                    let category = findCategory(categoryId);
+
+                    categoryLists[category.key].name = newCategoryName;
+
+                    //Add to category lists
+                    $('#breadcrumb-item-'+categoryId).html(newCategoryName);
+
+                    $modal.modal('hide');
+                });
+            });
+        });
+
         $modal.modal('show');
     };
-
-    updateCategory = function (categoryId, button) {
-        let categoryTitle = $('input[name="category-title"]').val();
-        let categoryData = $('textarea[name="category-data"]').val();
-
-        $(button).addClass('disabled')
-            .attr('disabled', 'disabled')
-            .html('Saving...');
-
-        $.ajax({
-            url: '/api/categories',
-            method: 'PUT',
-            data: {
-                title: categoryTitle,
-                category: categoryData,
-            },
-            error: function (error) {
-                alert('Error occurred');
-                console.log(error);
-            }
-        }).then(function (response) {
-            let category = findCategory(categoryId);
-
-            categoryLists[category.key].title = categoryTitle;
-            categoryLists[category.key].category = categoryData;
-
-            //Add to category lists
-            $('#category-item-'+categoryId)
-                .find('.category-title')
-                .html(categoryTitle);
-
-            $modal.modal('hide');
-        });
-    }
 });

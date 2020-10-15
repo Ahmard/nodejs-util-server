@@ -68,7 +68,7 @@ Category.list = function (callback) {
     });
 };
 
-Category.updateById = function (id, category, callback) {
+Category.rename = function (id, category, callback) {
     sql.query(
         "UPDATE categories SET name = ?, updated_at = ? WHERE id = ?",
         [category.name, (new Date()).getTime(), id],
@@ -92,21 +92,30 @@ Category.updateById = function (id, category, callback) {
 };
 
 Category.remove = function (id, callback) {
-    sql.query("DELETE FROM categories WHERE id = ?", id, function (error, result) {
-        if (error) {
+    //DELETE notes inside the category first
+    sql.query('DELETE FROM notes WHERE category_id = ?', [id], function (error, result) {
+        if(! error){
+            //DELETE category now
+            sql.query("DELETE FROM categories WHERE id = ?", id, function (error, result) {
+                if (error) {
+                    console.log("error: ", error);
+                    callback(null, error);
+                    return;
+                }
+
+                if (result.affectedRows === 0) {
+                    // not found Category with the id
+                    callback({kind: "not_found"}, null);
+                    return;
+                }
+
+                console.log("deleted category with id: ", id);
+                callback(null, result);
+            });
+        }else {
             console.log("error: ", error);
             callback(null, error);
-            return;
         }
-
-        if (result.affectedRows === 0) {
-            // not found Category with the id
-            callback({kind: "not_found"}, null);
-            return;
-        }
-
-        console.log("deleted category with id: ", id);
-        callback(null, result);
     });
 };
 

@@ -52,19 +52,20 @@
 </template>
 
 <template id="template-rename-category">
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Name</span>
+    <form id="form-rename-category">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Name</span>
+            </div>
+            <input type="text" name="category-name" class="form-control" placeholder="Category Name"
+                   value="{{category.name}}">
         </div>
-        <input type="text" name="category-title" class="form-control" placeholder="Category Name"
-               value="{{category.title}}">
-    </div>
-    <div class="mt-2">
-        <button onclick="renameCategory({{category.id}}, this);" type="submit"
-                class="btn btn-md btn-block btn-primary ">
-            Rename
-        </button>
-    </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-md btn-block btn-primary ">
+                Rename
+            </button>
+        </div>
+    </form>
 </template>
 
 <template id="template-open-category">
@@ -73,14 +74,25 @@
 
 
 <template id="template-note-index">
-    <div class="bc-icons-2">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb grey lighten-1">
-                <li class="breadcrumb-item"><a class="black-text" href="#" onclick="fetchCategories();">Categories</a>
-                </li>
-                <li class="breadcrumb-item active">{{category.name}}</li>
-            </ol>
-        </nav>
+    <div class="d-flex justify-content-between">
+        <div class="bc-icons-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="black-text" href="#" onclick="fetchCategories();">Categories</a>
+                    </li>
+                    <li class="breadcrumb-item active" id="breadcrumb-item-{{category.id}}">{{category.name}}</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="bg-light">
+            <button class="btn btn-sm btn-primary" onclick="renameCategory({{category.id}});">
+                <i class="fa fa-pen-alt"></i> Rename
+            </button>
+            <button class="btn btn-sm btn-danger" onclick="deleteCategory({{category.id}});">
+                <i class="fa fa-trash-alt"></i> Delete
+            </button>
+        </div>
     </div>
 
     <div class="card" id="card-note">

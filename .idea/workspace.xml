@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="37e9902d-1b73-43a1-a9a6-b501e73e511b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-service/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/app/controllers/CategoryController.js" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/app/controllers/CategoryController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/app/models/CategoryModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/app/models/CategoryModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/app/routes/category-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/app/routes/category-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/public/assets/js/app.category.js" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/public/assets/js/app.category.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +25,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.19.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -34,7 +40,7 @@
       <updated>1602693338038</updated>
       <workItem from="1602693339090" duration="3018000" />
       <workItem from="1602697468685" duration="581000" />
-      <workItem from="1602757834296" duration="2268000" />
+      <workItem from="1602757834296" duration="6482000" />
     </task>
     <servers />
   </component>

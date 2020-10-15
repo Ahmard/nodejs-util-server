@@ -1,11 +1,3 @@
 # Nodejs Note Taking App
 
-## Project setup
-```
-npm install
-```
-
-### Run
-```
-node note-service/src
-```
+A note taking app with capability of categorisation.
